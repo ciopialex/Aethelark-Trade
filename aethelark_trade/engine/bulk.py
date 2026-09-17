@@ -24,7 +24,7 @@ logger = logging.getLogger("aethelark.bulk")
 COMPANYFACTS_ZIP_URL = (
     "https://www.sec.gov/Archives/edgar/daily-index/xbrl/companyfacts.zip"
 )
-from aethelark_trade.engine.useragent import sec_user_agent
+from aethelark_trade.engine.useragent import require_sec_contact, sec_user_agent
 
 USER_AGENT = sec_user_agent()
 
@@ -161,7 +161,7 @@ def download_companyfacts_zip(destination, progress=None) -> Path:
     destination.parent.mkdir(parents=True, exist_ok=True)
 
     with httpx.stream("GET", COMPANYFACTS_ZIP_URL,
-                      headers={"User-Agent": USER_AGENT},
+                      headers={"User-Agent": sec_user_agent()},
                       timeout=600.0, follow_redirects=True) as response:
         response.raise_for_status()
         total = int(response.headers.get("Content-Length", 0))

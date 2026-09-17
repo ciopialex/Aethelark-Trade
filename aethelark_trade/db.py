@@ -469,8 +469,27 @@ def init_db():
         pass
     conn.close()
 
+_SCHEMA_READY = False
+
+
 def get_db() -> sqlite3.Connection:
-    """Get a SQLite connection. Assumes init_db was called."""
+    """Get a SQLite connection, creating the schema on first use.
+
+    This used to say "assumes init_db was called" -- and nothing on the atrade
+    path ever called it. Measured 2026-09-14 against a live install: the
+    database held two tables, both created lazily elsewhere, and `atrade
+    owners` died with `no such table: schedule13_filings` on every run. On a
+    machine that has only ever pip-installed this module there is no other
+    process to have created them at all.
+
+    init_db() is CREATE TABLE IF NOT EXISTS throughout, so this is idempotent;
+    the flag keeps it to one pass per process rather than one per connection.
+    """
+    global _SCHEMA_READY
+    if not _SCHEMA_READY:
+        init_db()
+        _SCHEMA_READY = True
+
     conn = sqlite3.connect(str(DB_PATH), timeout=30.0, check_same_thread=False)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA journal_mode=WAL")

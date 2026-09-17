@@ -26,7 +26,7 @@ ATOM_BASE = "https://www.sec.gov/cgi-bin/browse-edgar"
 
 # The SEC requires a real, contactable User-Agent. Impersonating a browser is
 # both against their access policy and how streamers get an IP banned.
-from aethelark_trade.engine.useragent import sec_user_agent
+from aethelark_trade.engine.useragent import require_sec_contact, sec_user_agent
 
 USER_AGENT = sec_user_agent()
 
@@ -148,7 +148,7 @@ def poll_once(client: httpx.Client, form_type: str = "4") -> list[FilingEvent]:
         response = client.get(
             feed_url(form_type),
             headers={
-                "User-Agent": USER_AGENT,
+                "User-Agent": sec_user_agent(),
                 "Accept-Encoding": "gzip, deflate",
                 "Accept": "application/atom+xml,application/xml;q=0.9,*/*;q=0.8",
             },

@@ -2,7 +2,7 @@
 
 import time
 import logging
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 logger = logging.getLogger("SECClient")
@@ -14,7 +14,7 @@ SEC_SUBMISSIONS_URL = "https://data.sec.gov/submissions/CIK{cik}.json"
 SEC_FILING_INDEX_URL = "https://www.sec.gov/Archives/edgar/data/{cik}/{accession}/index.json"
 SEC_ARCHIVES_BASE = "https://www.sec.gov/Archives/edgar/data"
 
-from aethelark_trade.engine.useragent import sec_user_agent
+from aethelark_trade.engine.useragent import require_sec_contact, sec_user_agent
 
 #: SEC requires a declared, contactable UA. Set ATRADE_SEC_CONTACT to use your
 #: own address instead of the project URL.
@@ -61,7 +61,10 @@ class RateLimiter:
 
 @dataclass
 class SECClientConfig:
-    user_agent: str = DEFAULT_USER_AGENT
+    #: Resolved per instance, not once at import: a contact configured after
+    #: this module was imported (or by `atrade register --contact`) must take
+    #: effect without a restart.
+    user_agent: str = field(default_factory=sec_user_agent)
     cache_dir: Path | None = None
     timeout: float = 30.0
 
@@ -109,6 +112,10 @@ class SECClient:
     @property
     def client(self) -> httpx.Client:
         if self._client is None:
+            # SEC answers a UA with no contactable address with HTTP 403, and
+            # the retry loop turns that into ten failures and a useless error.
+            # Refuse here, where the message can say what to set.
+            require_sec_contact()
             self._client = httpx.Client(
                 headers={"User-Agent": self.config.user_agent, "Accept-Encoding": "gzip, deflate"},
                 timeout=self.config.timeout,

@@ -703,13 +703,14 @@ def governance(
 @app.command()
 def owners(
     ticker: str = typer.Argument(..., help="Ticker symbol, e.g. NVDA"),
+    refresh: bool = typer.Option(False, "--refresh",
+                                 help="Refetch from SEC even if cached."),
     json: bool = typer.Option(False, "--json", help="Machine-readable holders."),
 ):
     """Who holds five percent or more, and which of them are activists."""
-    from aethelark_trade.owners import who_owns
-    from aethelark_trade.storage import load_schedule13_filings
+    from aethelark_trade.engine.ownership import owners_of
 
-    answer = who_owns(ticker, load_schedule13_filings(ticker, limit=60))
+    answer = owners_of(ticker, refresh=refresh)
 
     if json:
         typer.echo(jsonlib.dumps(answer, indent=2, default=str))
@@ -829,6 +830,9 @@ def watchlist(json: bool = typer.Option(False, "--json")):
 def register_module(
     path: str = typer.Option("", "--path",
                              help="Override the modules directory."),
+    contact: str = typer.Option("", "--contact",
+                                help="Your email, sent to SEC in the User-Agent. "
+                                     "SEC refuses requests without one."),
     json: bool = typer.Option(False, "--json", help="Machine-readable output."),
 ):
     """Install the Space-Eagle Module Bus socket for atrade.
@@ -841,6 +845,17 @@ def register_module(
     from aethelark_trade.engine.register import (
         RegistrationError, register, registration_summary,
     )
+    from aethelark_trade.engine.useragent import sec_contact, store_contact
+
+    if contact:
+        try:
+            store_contact(contact)
+        except ValueError as exc:
+            if json:
+                console.print_json(jsonlib.dumps({"ok": False, "error": str(exc)}))
+            else:
+                console.print(f"[red]✗[/red] {exc}")
+            raise typer.Exit(1)
 
     try:
         target = register(path or None)
@@ -852,10 +867,12 @@ def register_module(
         raise typer.Exit(1)
 
     tools, cards = registration_summary(target)
+    configured = sec_contact()
     if json:
         console.print_json(jsonlib.dumps({
             "ok": True, "manifest": str(target),
             "tools": tools, "island_cards": cards,
+            "sec_contact": configured,
         }))
         return
     console.print(
@@ -863,6 +880,15 @@ def register_module(
         f"[dim]{len(tools)} tools: {', '.join(tools)}[/dim]\n"
         f"[dim]{cards} island cards installed[/dim]"
     )
+    if configured:
+        console.print(f"[dim]SEC contact: {configured}[/dim]")
+    else:
+        console.print(
+            "[yellow]![/yellow] No SEC contact set. The tools that read filings "
+            "will refuse until you set one:\n"
+            "    [bold]atrade register --contact you@example.com[/bold]\n"
+            "[dim]SEC requires a contactable address and answers 403 without "
+            "it. quote and the watchlist do not need it.[/dim]")
 
 
 if __name__ == "__main__":
