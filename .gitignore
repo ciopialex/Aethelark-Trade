@@ -1,0 +1,39 @@
+# Credentials — this repo is public. Nothing here is ever a false positive.
+.env
+.env.*
+!.env.example
+*.env
+*Keys*.txt
+*secret*
+*token*
+*.key
+*.pem
+Alpaca_Keys.txt
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Local state. The database self-creates at ~/.aethelark/aethelark.db;
+# a copy in the working tree is a stray, never a fixture.
+*.db
+*.sqlite
+*.sqlite3
+*.log
+*.parquet
+
+# The curated universe seed lives at aethelark_trade/data/constituents.csv and
+# IS tracked. Ignore stray CSVs elsewhere without swallowing it.
+/*.csv
+scratch/

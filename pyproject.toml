@@ -1,0 +1,77 @@
+[project]
+name = "aethelark-trade"
+version = "1.0.0"
+description = "Aethelark-Trade — 7-layer equity intelligence engine and Space-Eagle module"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [{name = "Aethelark"}]
+keywords = ["sec", "edgar", "insider-trading", "form-4", "cli", "equity-research",
+            "space-eagle", "module"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
+
+# Measured, not inherited: this is what the eleven tools actually import.
+# The parent project declared nineteen; fastapi, uvicorn, feedparser, numpy,
+# crawlee, aiosqlite, pystray, Pillow, redis and uvloop are reachable from no
+# code in this tree.
+dependencies = [
+    "httpx>=0.27.0",
+    "lxml>=5.0.0",
+    "typer>=0.12.0",
+    "rich>=13.0.0",
+    "beautifulsoup4>=4.12.0",
+    "yfinance>=0.2.36",
+]
+
+[project.optional-dependencies]
+# `atrade portfolio` reads a live brokerage account. Bring your own keys; see
+# .env.example. Without these installed the other ten tools are unaffected.
+portfolio = ["alpaca-py>=0.30.0", "python-dotenv>=1.0.0"]
+# `atrade sync-bulk` only. Imported inside the function, never at module load.
+bulk = ["polars>=1.3.0"]
+# Regenerating the Dynamic Island's company marks (engine/logos.py). The island
+# ships a prebuilt logos.json; this is only needed to harvest new tickers.
+logos = ["Pillow>=10.0.0", "numpy>=1.26.0"]
+dev = ["pytest>=8.0.0", "pytest-cov>=4.0.0"]
+
+[project.scripts]
+atrade = "aethelark_trade.engine.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/ciopialex/Aethelark-Trade"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["aethelark_trade"]
+
+# The module socket, its island assets and the constituents seed are data, not
+# code. They live inside the package (aethelark_trade/module, /data) precisely
+# so that a plain `pip install git+...` carries them: `atrade register` copies
+# the manifest out of the installed package, and the leaderboard reads the CSV
+# from there. Verified by listing the built wheel, not assumed.
+[tool.hatch.build.targets.sdist]
+include = ["aethelark_trade", "tests", "README.md", "CLAUDE.md",
+           "pyproject.toml", "pytest.ini"]
+
+[tool.mypy]
+files = ["aethelark_trade/engine"]
+python_version = "3.12"
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+strict_optional = true
+
+[[tool.mypy.overrides]]
+module = ["alpaca.*", "yfinance.*", "polars.*"]
+ignore_errors = true
