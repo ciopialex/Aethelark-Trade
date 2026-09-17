@@ -106,4 +106,18 @@ themselves.
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+**Source-available, noncommercial.** [PolyForm Noncommercial 1.0.0](LICENSE).
+
+This is not an open-source licence. The source is published so you can read it,
+audit it, and verify what it sends to SEC — not so it can be resold.
+
+- **Personal use, research, study, hobby projects** — permitted.
+- **Charities, schools, public research, government** — permitted.
+- **Any commercial use** — *not* granted here. That includes running it inside
+  a business, or building a product or service on it. Contact the copyright
+  holder for a commercial licence.
+- **Attribution travels with the code.** If you pass on any part of it, you
+  must pass on these terms and the `Required Notice` line with them. You may
+  not present this work as your own.
+
+Copyright 2026 Aethelark. All rights not expressly granted are reserved.
