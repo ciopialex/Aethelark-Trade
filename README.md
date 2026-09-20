@@ -1,8 +1,12 @@
 # Aethelark-Trade
 
-Seven-layer equity intelligence over SEC filings and market data, exposed as a
-single CLI — `atrade` — and as a module for the
-[Space-Eagle](https://github.com/ciopialex/Project-Space-Eagle) Module Bus.
+A module for the [Space-Eagle](https://github.com/ciopialex/Project-Space-Eagle)
+harness: seven-layer equity intelligence over SEC primary sources and market
+data.
+
+The harness calls it through one binary, `atrade`, which answers in JSON and
+carries its own Dynamic Island cards. This is not a standalone application —
+it is the trading half of an assistant.
 
 It answers questions like *is this company worth owning*, *are insiders
 buying*, *is the CEO paid in line with what shareholders earned* — from primary
