@@ -9,6 +9,7 @@ SEC's 10 req/s ceiling.
 """
 
 import logging
+from pathlib import Path
 import math
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
@@ -542,17 +543,42 @@ def fetch_form144_filings(client: SECClient, ticker: str, limit: int = 10) -> li
     return out
 
 
+#: Where an installed copy looks for Alpaca credentials.
+ALPACA_ENV_PATH = Path.home() / ".aethelark" / ".env"
+
+
 def fetch_alpaca_portfolio() -> dict:
-    """Account equity, buying power and open positions from Alpaca."""
+    """Account equity, buying power and open positions from Alpaca.
+
+    Credentials come from the environment, or from ~/.aethelark/.env.
+
+    A bare `load_dotenv()` searches upward from the *calling file*, which found
+    a .env at the repository root while this package was an editable install
+    inside that repository, and finds nothing once it is installed properly --
+    it climbs out through site-packages. Measured 2026-09-20: the same command
+    returned an account from a source checkout and "ALPACA_API_KEY not set"
+    from a pip install on the same machine, with the same .env on disk.
+
+    So the file is looked for where a user's configuration lives rather than
+    wherever the code happens to be unpacked. A real environment variable still
+    wins, and the old upward search is kept as a fallback for a checkout.
+    """
     import os
 
     from dotenv import load_dotenv
 
-    load_dotenv()
+    if not (os.environ.get("ALPACA_API_KEY") and os.environ.get("ALPACA_SECRET_KEY")):
+        if ALPACA_ENV_PATH.is_file():
+            load_dotenv(ALPACA_ENV_PATH)
+        else:
+            load_dotenv()
+
     key = os.environ.get("ALPACA_API_KEY")
     secret = os.environ.get("ALPACA_SECRET_KEY")
     if not key or not secret:
-        raise RuntimeError("ALPACA_API_KEY / ALPACA_SECRET_KEY not set")
+        raise RuntimeError(
+            f"ALPACA_API_KEY / ALPACA_SECRET_KEY not set. Put them in the "
+            f"environment or in {ALPACA_ENV_PATH}")
 
     from alpaca.trading.client import TradingClient
 
