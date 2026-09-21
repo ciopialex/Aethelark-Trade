@@ -20,16 +20,29 @@ from dataclasses import dataclass, field
 from aethelark_trade.xbrl import ProxyXBRL
 
 # Closed set, matching the phrasings decode_governance_summary() emits.
+#
+# It did not match. Measured 2026-09-21: xbrl.py emits SHARED PAIN, RISING TIDE
+# SKEPTICISM and INEFFICIENT GROWTH, none of which were listed, so `_classify`
+# returned UNKNOWN for them -- INTC among them -- and the card drew no
+# governance label for a company whose reading was perfectly clear. FAIR
+# EXCHANGE was listed and is emitted by nothing.
+#
+# tests/test_governance_verdicts_are_a_closed_set.py reads the phrases straight
+# out of xbrl.py and fails if the two drift apart again.
 VERDICTS = (
     "FOUNDER MODE",
     "ALIGNED PERFORMANCE",
+    "SHARED PAIN",
+    "RISING TIDE SKEPTICISM",
+    "INEFFICIENT GROWTH",
     "THE LEAK",
     "TOTAL DRAIN",
-    "FAIR EXCHANGE",
     "UNKNOWN",
 )
 
-# Verdicts that argue against owning the stock.
+# Verdicts that argue against owning the stock. SHARED PAIN is deliberately not
+# here: management taking a bigger haircut than shareholders is an argument for
+# trusting them, not against owning the company.
 BEARISH_VERDICTS = ("THE LEAK", "TOTAL DRAIN")
 
 _MARKUP = re.compile(r"\[/?[^\]]{0,40}\]")

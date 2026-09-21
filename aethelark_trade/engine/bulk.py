@@ -2,8 +2,15 @@
 
 Downloads the SEC's companyfacts archive once and flattens it into Parquet, so
 Layer 1 can be served for the whole market with zero live API calls. Only the
-concepts Layer 1 actually resolves are kept, which turns a ~500MB archive of
-deeply nested JSON into a narrow columnar table.
+concepts Layer 1 actually resolves are kept, which turns the archive of deeply
+nested JSON into a narrow columnar table.
+
+The archive is 1.41 GB (measured 2026-09-21 against the Content-Length; this
+note said ~500MB, off by 2.8x). Whether that download is worth it is pure
+arithmetic: one company's companyfacts over the live API averages 5.21 MB, so
+the bulk file pays for itself at ~270 companies and not before. A user asking
+about a dozen tickers should never fetch it; a full universe survey costs
+2.6 GB over the API and 503 rate-limited requests, so there it wins twice.
 """
 
 import json

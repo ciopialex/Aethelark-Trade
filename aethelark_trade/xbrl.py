@@ -73,22 +73,38 @@ class ProxyXBRL:
         if has_total_comp and total_comp_latest < 100000 and latest_tsr > oldest_tsr:
             return "🚀 [bold green]FOUNDER MODE (Extreme Bullish):[/bold green] CEO takes negligible salary while creating massive shareholder value. Total alignment."
 
-        # Calculate % changes
-        pay_change = (latest_pay - oldest_pay) / (oldest_pay if oldest_pay != 0 else 1)
-        tsr_change = (latest_tsr - oldest_tsr) / (oldest_tsr if oldest_tsr != 0 else 1)
+        # Calculate % changes.
+        #
+        # The denominator is an ABSOLUTE value, and that is the whole point.
+        # SEC's "Compensation Actually Paid" is a mark-to-market measure that
+        # includes the change in fair value of unvested equity, so it is
+        # legitimately NEGATIVE in a year the stock fell. Dividing a negative
+        # numerator by a negative denominator flips the sign of the result.
+        #
+        # Measured on INTC 2026-09-21: pay went from -$78.5M to -$82.2M, which
+        # is a 4.7% DECREASE. The signed denominator returned +4.7%, which trips
+        # the `tsr_change < 0 and pay_change > 0` branch below and published
+        # "CEO pay rose 4.7% ... Management is looting the ship" -- naming a real
+        # executive -- about a year in which their pay fell.
+        #
+        # engine/governance.py:_pct_change already divides by abs(oldest), so the
+        # structured `pay_change_pct` field was correct while the sentence the
+        # user actually hears was not. They must not be allowed to disagree.
+        pay_change = (latest_pay - oldest_pay) / (abs(oldest_pay) if oldest_pay != 0 else 1)
+        tsr_change = (latest_tsr - oldest_tsr) / (abs(oldest_tsr) if oldest_tsr != 0 else 1)
 
         # Peer Check
         peer_latest = self.peer_group_tsr[0].amount if self.peer_group_tsr else None
         peer_oldest = self.peer_group_tsr[lookback_idx].amount if len(self.peer_group_tsr) > lookback_idx else None
         peer_outperforming = False
         if peer_latest and peer_oldest:
-            peer_change = (peer_latest - peer_oldest) / (peer_oldest if peer_oldest != 0 else 1)
+            peer_change = (peer_latest - peer_oldest) / (abs(peer_oldest) if peer_oldest != 0 else 1)
             if peer_change > tsr_change:
                 peer_outperforming = True
 
         # Deciding the Phrase
         if tsr_change < 0 and pay_change > 0:
-            return f"💀 [bold red]TOTAL DRAIN (Extreme Bearish):[/bold red] CEO pay rose {pay_change:.1%}, but stock fell {abs(tsr_change):.1%}. Management is looting the ship."
+            return f"💀 [bold red]TOTAL DRAIN (Extreme Bearish):[/bold red] CEO pay rose {abs(pay_change):.1%}, but stock fell {abs(tsr_change):.1%}. Management is looting the ship."
         
         if tsr_change < 0 and pay_change < tsr_change:
             return "🫡 [bold cyan]SHARED PAIN (Respect):[/bold cyan] Stock is down, but management took an even larger haircut than you. Rational leadership."

@@ -85,6 +85,84 @@ manifest the eagle will never read — that has happened once already.
   once the holding company files its first 10-K — a data update, not a code
   change, but a real expiry.
 
+### Layer 7 has no data source here, and the "7 layers" claim is thin
+
+Measured 2026-09-21 across NVDA, JPM, KO and AMT: coverage came back 0.76 every
+time, and it was always the same two layers missing. `0.24 + 0.10 + 0.16 + 0.26`
+is exactly the weight of layers 1, 2, 4 and 5.
+
+- **Layer 7 never fires for anyone.** It scores `supply_chain_edges`, and
+  nothing in this module writes that table -- the loader was a collector in the
+  private repository. So 11% of the composite is renormalised away on every
+  query.
+- **Layer 3 fires about a quarter of the time**, because there is no
+  `FINNHUB_API_KEY` and the keyless lexicon often finds nothing classifiable.
+- **Layer 4 is absent for REITs** -- no sector ETF is mapped for them.
+- **Layer 1 degrades to bare ROIC for banks AND REITs**, not just banks.
+
+`engine/concentration.py` and `engine/counterparty.py` are the XBRL extractors
+that would feed layer 7, plus `sec_client.get_annual_filings()` and
+`find_xbrl_instance()`. They work -- measured on NVDA's 10-K, 14 facts -- but
+wiring them is not enough, for two reasons found by measurement:
+
+1. **Filers anonymise the counterparty.** NVDA discloses "CustomerOneMember
+   25%", not a name. `counterparty.py` can only resolve named ones.
+2. **`health` is uncomputable without a name.** Layer 7 scores momentum-derived
+   health; there is no share price for "Customer One". Every edge would carry
+   `health=0.5` and the layer would return exactly 50 for everyone -- a
+   constant at 11% weight, which is worse than honest absence because it fakes
+   coverage.
+
+Also: 6 of 12 sampled companies disclose nothing at all, and the facts that do
+come back mix geographic and credit-risk members with customer ones (PG reads
+100%, JPM 95% -- both artefacts). Any future loader has to filter by member
+type first. Until then the layer reporting "No supply-chain dependencies
+mapped" is the correct behaviour, not a bug to paper over.
+
+### The voice is generated, not the summaries
+
+`engine/speech.py` turns a scorecard into something a person would say, and
+`analyze --json` carries it as `spoken`. The layer `summary` fields stay dense
+because the card wants them dense.
+
+Absence is the most-used sentence this engine has -- two layers missing on a
+typical company -- so every layer carries its own phrasing for having nothing.
+"No classifiable news sentiment" reads as a broken sensor; "there's been
+nothing much in the news about them lately" does not.
+`tests/test_it_talks_like_a_person.py` fails if telemetry reaches the voice.
+
+### Governance makes a claim about a named person
+
+`decode_governance_summary()` can return "Management is looting the ship"
+attached to a real CEO's name, so the arithmetic under it gets a higher bar
+than the rest of the engine.
+
+It was wrong. SEC's "Compensation Actually Paid" is mark-to-market and is
+legitimately negative in a down year. `xbrl.py` divided the percent change by
+the *signed* denominator, and a negative over a negative flips the sign.
+Measured on INTC 2026-09-21: pay went -$78.5M -> -$82.2M, a 4.7% CUT, reported
+as +4.7%, which tripped the looting branch. `governance.py:_pct_change` had
+always used `abs(oldest)`, so the JSON field said -4.7 while the spoken
+sentence said "rose". Both now divide by an absolute value.
+
+`VERDICTS` also called itself a closed set and was not one: SHARED PAIN,
+RISING TIDE SKEPTICISM and INEFFICIENT GROWTH were emitted and unlisted, so
+they classified as UNKNOWN and the card drew no governance label. FAIR EXCHANGE
+was listed and emitted by nothing.
+`tests/test_governance_does_not_libel_anyone.py` holds both.
+
+### Logos
+
+`aethelark_trade/module/island/logos.json` carries all 507 names (503
+constituents plus 4 ETFs/extras), harvested 2026-09-21, 2.46 MB. It shipped
+with 22 -- ModuleShop's showcase list -- so 96% of the universe drew a
+monogram. Rebuild with `engine/logos.py:harvest()` then re-encode; it needs the
+`logos` extra (Pillow, numpy) and no API key.
+
+Note that **Space-Eagle's `web/pill.html` inlines its own `_logos` object and
+does not read this file.** Until the harness reads the module's copy, shipping
+a complete bundle here changes nothing on screen.
+
 ## Dangling citations are expected
 
 `engine/layers/macro.py`, `engine/layers/fundamentals.py` and

@@ -116,8 +116,13 @@ def analyze(
 
     if json:
         from aethelark_trade.engine.fetchers import with_quote
-        typer.echo(jsonlib.dumps(
-            with_quote(result.to_dict(), result.ticker), indent=2, default=str))
+        from aethelark_trade.engine.speech import spoken_answer
+
+        payload = with_quote(result.to_dict(), result.ticker)
+        # The card reads the dense per-layer summaries; the voice reads this.
+        # Both come off the same numbers, so they cannot drift apart.
+        payload["spoken"] = spoken_answer(payload)
+        typer.echo(jsonlib.dumps(payload, indent=2, default=str))
     else:
         render_scorecard(result)
 

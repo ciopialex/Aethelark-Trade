@@ -4,10 +4,14 @@ Every function here is deterministic and I/O-free so it can be tested
 against real numbers with zero mocks.
 
 Layer weights encode the architecture's thesis: the two *legally attested*
-layers (SEC fundamentals, SEC Form 4 insider conviction) carry 46% of the
-composite, cross-sectional alpha carries 15%, and the slow context layers
+layers (SEC fundamentals 24%, SEC Form 4 insider conviction 26%) carry 50% of
+the composite, cross-sectional alpha carries 16%, and the slow context layers
 (macro gravity, geopolitics) are deliberately light so they modulate rather
 than dominate a single-name verdict.
+
+The figures above are read off LAYER_WEIGHTS below and must be changed with
+them. They said 46% and 15% while the weights summed to 50% and 16% -- the
+numbers anyone would quote when deciding whether this model is worth using.
 """
 
 # Identity of the scoring math itself. Bump this whenever a layer's formula,

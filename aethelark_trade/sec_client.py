@@ -555,6 +555,64 @@ class SECClient:
         except SECClientError:
             return None
 
+    def get_annual_filings(self, cik: str, limit: int = 3) -> list[dict]:
+        """10-K filings, newest first.
+
+        Layer 7 reads customer-concentration disclosures (ASC 280-10-50-42),
+        which are tagged in the annual report's XBRL instance document and
+        nowhere else. 10-K405 and 10-KSB are included because older filers used
+        them for the same document.
+        """
+        submissions = self.get_submissions(cik)
+        filings = submissions.get("filings", {}).get("recent", {})
+
+        form_types = filings.get("form", [])
+        accessions = filings.get("accessionNumber", [])
+        filing_dates = filings.get("filingDate", [])
+        primary_docs = filings.get("primaryDocument", [])
+
+        out: list[dict] = []
+        for i, form in enumerate(form_types):
+            if not form.startswith("10-K"):
+                continue
+            out.append({
+                "form_type": form,
+                "accession_number": accessions[i],
+                "filing_date": filing_dates[i],
+                "primary_document": primary_docs[i] if i < len(primary_docs) else "",
+            })
+            if len(out) >= limit:
+                break
+        return out
+
+    def find_xbrl_instance(self, cik: str, accession: str) -> str | None:
+        """The XBRL instance document inside a filing directory.
+
+        Modern filings are inline XBRL: the facts live in the main `_htm.xml`
+        instance rather than a separate one. The exhibit schemas (`_cal`, `_def`,
+        `_lab`, `_pre`) and the `.xsd` describe the taxonomy and carry no facts,
+        so they are skipped rather than parsed and found empty.
+        """
+        try:
+            index = self.get_filing_index(cik, accession)
+            items = index.get("directory", {}).get("item", [])
+        except SECClientError:
+            return None
+
+        skip = ("_cal.xml", "_def.xml", "_lab.xml", "_pre.xml")
+        candidates = [it.get("name", "") for it in items]
+
+        for name in candidates:
+            lower = name.lower()
+            if lower.endswith("_htm.xml") and not lower.endswith(skip):
+                return name
+        for name in candidates:
+            lower = name.lower()
+            if lower.endswith(".xml") and not lower.endswith(skip) \
+                    and "primary_doc" not in lower and not lower.endswith("filingsummary.xml"):
+                return name
+        return None
+
     def find_ex991_html(self, cik: str, accession: str) -> str | None:
         """Find the EX-99.1 (Earnings Press Release) HTML file in a filing directory."""
         try:
