@@ -1,0 +1,67 @@
+{
+  "ranked": 5,
+  "rankings": [
+    {
+      "age_seconds": 1.602608,
+      "asymmetry": 48.98,
+      "composite": 55,
+      "fcf_yield_pct": 1.7608,
+      "insider": 48,
+      "quality": 78,
+      "rank": 1,
+      "scored_at": "2026-09-22T07:04:05+00:00",
+      "ticker": "NVDA"
+    },
+    {
+      "age_seconds": 2.602611,
+      "asymmetry": 43.4,
+      "composite": 65,
+      "fcf_yield_pct": 0.6703,
+      "insider": 52,
+      "quality": 67,
+      "rank": 2,
+      "scored_at": "2026-09-22T07:04:04+00:00",
+      "ticker": "AMD"
+    },
+    {
+      "age_seconds": 142156.602587,
+      "asymmetry": 40.59,
+      "composite": 55,
+      "fcf_yield_pct": 0.4323,
+      "insider": 55,
+      "quality": 59,
+      "rank": 3,
+      "scored_at": "2026-09-20T15:34:50+00:00",
+      "ticker": "TSLA"
+    },
+    {
+      "age_seconds": 46496.602618,
+      "asymmetry": 40.3,
+      "composite": 64,
+      "fcf_yield_pct": -15.7932,
+      "insider": 54,
+      "quality": 67,
+      "rank": 4,
+      "scored_at": "2026-09-21T18:09:10+00:00",
+      "ticker": "JPM"
+    },
+    {
+      "age_seconds": 46491.602616,
+      "asymmetry": 36.12,
+      "composite": 52,
+      "fcf_yield_pct": 1.4023,
+      "insider": 11,
+      "quality": 71,
+      "rank": 5,
+      "scored_at": "2026-09-21T18:09:15+00:00",
+      "ticker": "KO"
+    }
+  ],
+  "scorecards_available": 5,
+  "sector_filter": null,
+  "stalest_days": 1.6,
+  "summary": "Ranked 5 companies already analysed on this machine. This is not a survey of the sp500 universe. The oldest reading is 1.6 days old.",
+  "superseded_scorecards": 0,
+  "surveyed_the_universe": false,
+  "universe_requested": "sp500"
+}

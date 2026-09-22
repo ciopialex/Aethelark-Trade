@@ -1,0 +1,118 @@
+{
+  "_transactions": [
+    {
+      "accession": "0000002488-26-000180",
+      "code": "M",
+      "date": "2026-09-15",
+      "insider": "Norrod Forrest Eugene",
+      "is_10b5_1": true,
+      "price": 84.85,
+      "shares": 7261.0,
+      "shares_owned_after": 380578.0,
+      "signal": "DILUTION",
+      "title": "EVP & GM DSG",
+      "value": 616095.85
+    },
+    {
+      "accession": "0000002488-26-000180",
+      "code": "S",
+      "date": "2026-09-15",
+      "insider": "Norrod Forrest Eugene",
+      "is_10b5_1": true,
+      "price": 498.3,
+      "shares": 757.0,
+      "shares_owned_after": 379821.0,
+      "signal": "BEARISH",
+      "title": "EVP & GM DSG",
+      "value": 377213.1
+    },
+    {
+      "accession": "0000002488-26-000180",
+      "code": "S",
+      "date": "2026-09-15",
+      "insider": "Norrod Forrest Eugene",
+      "is_10b5_1": true,
+      "price": 498.98,
+      "shares": 100.0,
+      "shares_owned_after": 379721.0,
+      "signal": "BEARISH",
+      "title": "EVP & GM DSG",
+      "value": 49898.0
+    },
+    {
+      "accession": "0000002488-26-000180",
+      "code": "S",
+      "date": "2026-09-15",
+      "insider": "Norrod Forrest Eugene",
+      "is_10b5_1": true,
+      "price": 500.67,
+      "shares": 1017.0,
+      "shares_owned_after": 378704.0,
+      "signal": "BEARISH",
+      "title": "EVP & GM DSG",
+      "value": 509181.39
+    }
+  ],
+  "bought": {
+    "count": 0,
+    "usd": 0
+  },
+  "buys": [],
+  "filings": 177,
+  "form144_notices": 0,
+  "latest": {
+    "action": "exercises",
+    "date": "2026-09-15",
+    "insider": "Norrod Forrest Eugene",
+    "is_10b5_1": true,
+    "title": "EVP & GM DSG",
+    "usd": 616095.85
+  },
+  "lookback_days": 60,
+  "net_usd": -105533672.27,
+  "other": {
+    "exercises": 54,
+    "gifts": 4,
+    "grants": 19,
+    "tax_withheld": 23
+  },
+  "sold": {
+    "count": 77,
+    "usd": 105533672.27
+  },
+  "ticker": "AMD",
+  "top_sales": [
+    {
+      "action": "sold",
+      "date": "2026-08-17",
+      "insider": "GRASBY PAUL DARREN",
+      "is_10b5_1": false,
+      "title": "EVP & CSO",
+      "usd": 7723650.0
+    },
+    {
+      "action": "sold",
+      "date": "2026-09-10",
+      "insider": "Su Lisa T",
+      "is_10b5_1": true,
+      "title": "Chair, President & CEO",
+      "usd": 6623834.25
+    },
+    {
+      "action": "sold",
+      "date": "2026-09-10",
+      "insider": "Su Lisa T",
+      "is_10b5_1": true,
+      "title": "Chair, President & CEO",
+      "usd": 6564088.66
+    },
+    {
+      "action": "sold",
+      "date": "2026-09-10",
+      "insider": "Su Lisa T",
+      "is_10b5_1": true,
+      "title": "Chair, President & CEO",
+      "usd": 5331668.88
+    }
+  ]
+}

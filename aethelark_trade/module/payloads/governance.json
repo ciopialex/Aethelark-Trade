@@ -1,0 +1,23 @@
+{
+  "available": true,
+  "bearish": false,
+  "ceo_name": "Ms. Johnston Holthaus",
+  "detail": {
+    "ceo_pay_earliest": -78501522.0,
+    "ceo_pay_latest": -82216617.0,
+    "shareholder_return_earliest": 48.06,
+    "shareholder_return_latest": 38.3,
+    "years": [
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020"
+    ]
+  },
+  "pay_change_pct": -4.7,
+  "sentence": "\u2696\ufe0f INEFFICIENT GROWTH (Neutral): Pay and performance are moving in lockstep. Standard corporate 'Participation Trophy'.",
+  "ticker": "INTC",
+  "tsr_change_pct": -20.3,
+  "verdict": "INEFFICIENT GROWTH"
+}

@@ -1,0 +1,41 @@
+{
+  "activists": 0,
+  "holders": [
+    {
+      "filed": "2024-10-04",
+      "form": "SC 13G/A",
+      "name": "The Vanguard Group",
+      "percent": 11.39,
+      "shares": 244058850,
+      "stance": "passive"
+    },
+    {
+      "filed": "2024-11-08",
+      "form": "SC 13G/A",
+      "name": "Palantir Technologies Inc",
+      "percent": 9.6,
+      "shares": 2985381,
+      "stance": "passive"
+    },
+    {
+      "filed": "2024-11-08",
+      "form": "SC 13G/A",
+      "name": "BlackRock, Inc",
+      "percent": 7.4,
+      "shares": 158217849,
+      "stance": "passive"
+    },
+    {
+      "filed": "2024-11-14",
+      "form": "SC 13G/A",
+      "name": "STS Holdings II LLC",
+      "percent": 1.9,
+      "shares": 41899108,
+      "stance": "passive"
+    }
+  ],
+  "latest_filing": "2024-11-14",
+  "summary": "4 five-percent holders on record for PLTR. The most recent filing is dated 2024-11-14.",
+  "ticker": "PLTR",
+  "unreadable": 0
+}

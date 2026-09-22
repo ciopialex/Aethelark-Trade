@@ -142,21 +142,6 @@ def get_insider_store_age(ticker: str | None = None) -> dict:
     }
 
 
-def refresh_insider_store(ticker: str, client=None, limit: int = 40) -> int:
-    """Pull delta from SEC EDGAR Form 4 feeds and persist to local store."""
-    from aethelark_trade.engine.engine import SECClientContext
-    from aethelark_trade.engine.fetchers import fetch_insider_transactions
-    try:
-        if client is None:
-            with SECClientContext() as c:
-                txs = fetch_insider_transactions(c, ticker, limit=limit)
-        else:
-            txs = fetch_insider_transactions(client, ticker, limit=limit)
-        return save_transactions(txs)
-    except Exception:
-        return 0
-
-
 def load_transactions(ticker: str, limit: int | None = None, data_dir=None) -> TransactionList:
     """Load transactions from SQLite, sorted by date (newest first)."""
     db = get_db()
