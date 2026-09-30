@@ -1,0 +1,131 @@
+{
+  "_series": {
+    "1D": [
+      585.56,
+      586.585,
+      600.62,
+      604.015,
+      600.26,
+      605.0609
+    ],
+    "1M": [
+      456.75,
+      479.18,
+      480.93,
+      476.67,
+      465.58,
+      470.72
+    ],
+    "1Y": [
+      159.79,
+      159.46,
+      164.01,
+      164.67,
+      235.56,
+      214.9
+    ],
+    "3M": [
+      551.63,
+      519.85,
+      519.74,
+      532.57,
+      521.58,
+      539.49
+    ],
+    "5Y": [
+      105.8,
+      120.23,
+      147.89,
+      154.81,
+      138.55,
+      143.9
+    ],
+    "7D": [
+      511.135,
+      520.065,
+      513.84,
+      516.21,
+      515.87,
+      511.9
+    ]
+  },
+  "change": 57.54,
+  "change_pct": 10.31,
+  "company_name": "Advanced Micro Devices",
+  "composite_a": 65,
+  "composite_b": 55,
+  "day_high": 616.69,
+  "day_low": 582.27,
+  "layers": [
+    {
+      "delta": -11,
+      "layer": "layer_1_fundamentals",
+      "score_a": 67,
+      "score_b": 78,
+      "summary_a": "49.5% Gross Margin \u2022 +0.2pp YoY \u2022 19.4% FCF Margin \u2022 4.5% ROIC",
+      "summary_b": "71.1% Gross Margin \u2022 -3.9pp YoY \u2022 44.8% FCF Margin \u2022 62.5% ROIC",
+      "weight": 0.24,
+      "winner": "NVDA"
+    },
+    {
+      "delta": 0,
+      "layer": "layer_2_macro_gravity",
+      "score_a": 55,
+      "score_b": 55,
+      "summary_a": "5.0% 10Y Yield Headwind \u2022 VIX 14.9 \u2022 DXY 100.4 \u2022 Copper +3.5%",
+      "summary_b": "5.0% 10Y Yield Headwind \u2022 VIX 14.9 \u2022 DXY 100.4 \u2022 Copper +3.5%",
+      "weight": 0.1,
+      "winner": null
+    },
+    {
+      "delta": 2,
+      "layer": "layer_3_news_velocity",
+      "score_a": 59,
+      "score_b": 57,
+      "summary_a": "17 headlines \u2022 freshest 7.0h old \u2022 weighted tone +0.17",
+      "summary_b": "18 headlines \u2022 freshest 3.6h old \u2022 weighted tone +0.15",
+      "weight": 0.13,
+      "winner": "AMD"
+    },
+    {
+      "delta": 63,
+      "layer": "layer_4_sector_relativity",
+      "score_a": 96,
+      "score_b": 33,
+      "summary_a": "+3.2\u03c3 alpha vs XLK (+0.71%/day excess over 119 sessions)",
+      "summary_b": "-0.7\u03c3 alpha vs XLK (-0.09%/day excess over 119 sessions)",
+      "weight": 0.16,
+      "winner": "AMD"
+    },
+    {
+      "delta": 4,
+      "layer": "layer_5_insider_conviction",
+      "score_a": 52,
+      "score_b": 48,
+      "summary_a": "Routine liquidation \u2022 -$108.9M net selling \u2022 1 discretionary / 77 on 10b5-1 plans (90d)",
+      "summary_b": "Routine liquidation \u2022 -$660.7M net selling \u2022 14 discretionary / 6 on 10b5-1 plans (90d)",
+      "weight": 0.26,
+      "winner": "AMD"
+    },
+    {
+      "delta": null,
+      "layer": "layer_7_supply_chain",
+      "score_a": null,
+      "score_b": null,
+      "summary_a": "No supply-chain dependencies mapped",
+      "summary_b": "No supply-chain dependencies mapped",
+      "weight": 0.11,
+      "winner": null
+    }
+  ],
+  "layers_won_a": 3,
+  "layers_won_b": 1,
+  "margin": 10,
+  "market_cap": 1004821069736,
+  "previous_close": 557.98,
+  "price": 615.52,
+  "ticker_a": "AMD",
+  "ticker_b": "NVDA",
+  "volume": 44270000,
+  "winner": "AMD"
+}

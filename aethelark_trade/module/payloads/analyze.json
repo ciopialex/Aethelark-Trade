@@ -1,0 +1,149 @@
+{
+  "_series": {
+    "1D": [
+      222.07,
+      223.86,
+      223.7601,
+      224.855,
+      224.645,
+      224.29
+    ],
+    "1M": [
+      208.247,
+      212.8119,
+      209.4257,
+      227.7252,
+      217.3068,
+      220.5332
+    ],
+    "1Y": [
+      183.1712,
+      177.7641,
+      186.1341,
+      188.4385,
+      184.5977,
+      192.1097
+    ],
+    "3M": [
+      208.4168,
+      199.8164,
+      198.7776,
+      195.5212,
+      192.3148,
+      194.7521
+    ],
+    "5Y": [
+      21.9842,
+      22.6263,
+      29.6215,
+      32.8404,
+      27.6825,
+      29.2856
+    ],
+    "7D": [
+      220.06,
+      221.6,
+      219.7881,
+      220.1801,
+      219.57,
+      219.58
+    ]
+  },
+  "asymmetry_ratio": "0.5 : 1",
+  "change": 4.85,
+  "change_pct": 2.18,
+  "company_name": "NVIDIA Corp.",
+  "composite_score": 55,
+  "coverage": 0.89,
+  "day_high": 228.5,
+  "day_low": 221.56,
+  "dossier_path": null,
+  "generated_at": "2026-09-22T07:03:59+00:00",
+  "invalidation_level": "$218.63 (25-EMA support)",
+  "layers": {
+    "layer_1_fundamentals": {
+      "available": true,
+      "detail": {
+        "fcf_margin": 0.44770258129648327,
+        "fcf_margin_scored": true,
+        "fcf_yield_pct": 1.7608,
+        "fiscal_year_end": "2026-01-25",
+        "gross_margin": 0.7106808435754708,
+        "gross_margin_delta_pp": -3.9206127006228386,
+        "revenue": 215938000000.0,
+        "roic": 0.6251789247520666,
+        "source": "live"
+      },
+      "score": 78,
+      "summary": "71.1% Gross Margin \u2022 -3.9pp YoY \u2022 44.8% FCF Margin \u2022 62.5% ROIC"
+    },
+    "layer_2_macro_gravity": {
+      "available": true,
+      "detail": {
+        "beta": 1.87,
+        "copper_change_pct": 3.4501064340800096,
+        "cyclicality": 1.1,
+        "dollar_index": 100.4469985961914,
+        "rate_sensitivity": 0.86,
+        "vix": 14.869999885559082,
+        "yield_10y": 4.9629998207092285
+      },
+      "score": 55,
+      "summary": "5.0% 10Y Yield Headwind \u2022 VIX 14.9 \u2022 DXY 100.4 \u2022 Copper +3.5%"
+    },
+    "layer_3_news_velocity": {
+      "available": true,
+      "detail": {
+        "freshest_age_hours": 3.58,
+        "headline_count": 18,
+        "sentiment_pct": 57.0,
+        "weighted_tone": 0.1478
+      },
+      "score": 57,
+      "summary": "18 headlines \u2022 freshest 3.6h old \u2022 weighted tone +0.15"
+    },
+    "layer_4_sector_relativity": {
+      "available": true,
+      "detail": {
+        "alpha_z": -0.7205,
+        "mean_daily_excess": -0.000857,
+        "sector_etf": "XLK",
+        "sessions": 119
+      },
+      "score": 33,
+      "summary": "-0.7\u03c3 alpha vs XLK (-0.09%/day excess over 119 sessions)"
+    },
+    "layer_5_insider_conviction": {
+      "available": true,
+      "detail": {
+        "bought_usd": 0.0,
+        "buy_conviction": 0.0,
+        "discretionary_sell_conviction": 0.1881,
+        "discretionary_trade_count": 14,
+        "excluded_non_insider_trades": 0,
+        "planned_sell_intensity": 0.0421,
+        "planned_trade_count": 6,
+        "sold_usd": 660665685.48,
+        "tier": "ROUTINE",
+        "trade_count": 20
+      },
+      "score": 48,
+      "summary": "Routine liquidation \u2022 -$660.7M net selling \u2022 14 discretionary / 6 on 10b5-1 plans (90d)"
+    },
+    "layer_7_supply_chain": {
+      "available": false,
+      "score": null,
+      "summary": "No supply-chain dependencies mapped"
+    }
+  },
+  "liar_filter_detail": "No sentiment/insider divergence detected",
+  "liar_filter_status": "CLEAN",
+  "market_cap": 5490544977905,
+  "previous_close": 222.53,
+  "price": 227.38,
+  "reason": "the business prints cash",
+  "spoken": "NVIDIA Corp. \u2014 It looks genuinely interesting. The business prints cash. Financially, gross margins around 71%, and they keep about 45% of revenue as free cash. Returns on capital are excellent, about 63%. Margins are down roughly 4 points on last year. Insiders sold about $661 million, though 6 of those were pre-scheduled plans \u2014 it reads as routine rather than anyone heading for the exit. It's been trailing the rest of XLK slightly over about six months. There are 18 stories about them just in the last few hours, and the tone is pretty even. I couldn't map who they depend on commercially. On the backdrop, the ten-year sits at 5.0%, and the market's calm. This one tends to move with rates, so that matters more than usual. There are one or two things I couldn't check, so take it as a partial read.",
+  "ticker": "NVDA",
+  "verdict": "ACCUMULATE",
+  "volume": 109479900
+}
