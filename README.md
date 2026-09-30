@@ -15,8 +15,8 @@ rather than from a vendor's summary of them.
 
 ## Install
 
-It comes with [Aethelark](https://github.com/ciopialex/Project-Space-Eagle). To add
-it by hand: **Settings → Modules → Get**, or `eagle install trade`.
+Tick it on [Aethelark](https://github.com/ciopialex/Project-Space-Eagle)'s first-run
+screen, or add it later: **Settings → Modules → Get**, or `eagle install trade`.
 
 On its own:
 
